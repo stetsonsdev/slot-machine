@@ -1,6 +1,7 @@
 print ("Welcome to the Slot Machine Simulator!")
 MAX_LINES = 3
-
+MAX_BET= 100
+MIN_BET = 1
 def deposit():
     while True:
         amount = (input("Enter the amount you want to deposit: $"))
@@ -25,9 +26,23 @@ def get_number_of_lines():
         else:
             print("Please enter a number.")
     return lines
+def get_bet():
+    while True:
+        bet = (input("Enter the amount you want to bet on each line: (between $" + str(MIN_BET) + " and $" + str(MAX_BET) + "): $"))
+        if bet.isdigit(): 
+            bet = int(bet) 
+            if MIN_BET <= bet <= MAX_BET:
+                break
+            else:
+                print(f"Invalid input. Bet must be between ${MIN_BET} - ${MAX_BET}.")
+        else:
+            print("Please enter a number.")
+    return bet
 def main():
     balance = deposit()
     lines = get_number_of_lines()
-    print(balance, lines)
+    bet = get_bet()
+    total_bet = lines * bet
+    print(f"You are betting ${bet} on {lines} lines for a total bet of ${total_bet}.")
     
 main()

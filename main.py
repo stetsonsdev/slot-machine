@@ -1,4 +1,6 @@
-print ("Welcome to the Slot Machine Simulator!")
+
+import random
+
 MAX_LINES = 3
 MAX_BET= 100
 MIN_BET = 1
@@ -41,8 +43,16 @@ def get_bet():
 def main():
     balance = deposit()
     lines = get_number_of_lines()
-    bet = get_bet()
-    total_bet = lines * bet
+    while True:
+        bet = get_bet()
+        total_bet = lines * bet
+        
+        if total_bet > balance:
+            print(f"Insufficient funds. Please deposit more money. Your current balance is ${balance}.")
+        else:
+            break
     print(f"You are betting ${bet} on {lines} lines for a total bet of ${total_bet}.")
-    
+
+
+print ("Welcome to the Slot Machine Simulator!")    
 main()

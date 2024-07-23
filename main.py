@@ -2,7 +2,7 @@ import random
 
 MAX_LINES = 3
 MAX_BET= 100
-MIN_BET = 1
+MIN_BET = 2
 
 ROWS = 3
 COLS = 3
@@ -101,8 +101,8 @@ def get_bet():
         else:
             print("Please enter a number.")
     return bet
-def main():
-    balance = deposit()
+
+def spin(balance):
     lines = get_number_of_lines()
     while True:
         bet = get_bet()
@@ -118,6 +118,19 @@ def main():
     print_slot_machine(slots)
     winnings, winning_lines = check_winnings(slots, lines, bet, symbol_values)
     print(f"You won ${winnings}. You won on lines:", *winning_lines)
+    return winnings - total_bet
+def main():
+    balance = deposit()
+    while True:
+        print(f"Your current balance is ${balance}.")
+        if  balance < MIN_BET * MIN_BET:
+            print("Insufficient funds to play. Please deposit more money.")
+            break
+        answer = input("Press Enter to play or 'q' to quit: ")
+        if answer == 'q':
+            break
+        balance += spin(balance)
+    print(f"You left with ${balance}. Thanks for playing! Goodbye!  :)")
 
 print ("Welcome to the Slot Machine Simulator!")    
 

@@ -35,6 +35,7 @@ def check_winnings(columns, lines, bet, values):
             winning_lines.append(line + 1)
             
         return winnings, winning_lines
+    
 def get_slot_machine_spin(rows, cols, symbols):
     all_symbols = []
     for symbol, symbol_count in symbols.items():
@@ -77,6 +78,7 @@ def deposit():
         else:
             print("Please enter a number.")
     return amount
+
 def get_number_of_lines():
     while True:
         lines = (input("Enter the number of lines you want to play (1-" + str(MAX_LINES) + "): "))
@@ -89,6 +91,7 @@ def get_number_of_lines():
         else:
             print("Please enter a number.")
     return lines
+
 def get_bet():
     while True:
         bet = (input("Enter the amount you want to bet on each line: (between $" + str(MIN_BET) + " and $" + str(MAX_BET) + "): $"))
@@ -119,13 +122,20 @@ def spin(balance):
     winnings, winning_lines = check_winnings(slots, lines, bet, symbol_values)
     print(f"You won ${winnings}. You won on lines:", *winning_lines)
     return winnings - total_bet
+
 def main():
     balance = deposit()
     while True:
         print(f"Your current balance is ${balance}.")
         if  balance < MIN_BET * MIN_BET:
             print("Insufficient funds to play. Please deposit more money.")
-            break
+            add_deposit = input("Would you like to deposit more money? (y/n):  ")
+            if add_deposit == "y":
+                old_balance = balance
+                balance += deposit()
+                print(f"You have successfully deposited ${balance - old_balance}. Your new balance is ${balance}.")                
+            if add_deposit == 'n':
+                break        
         answer = input("Press Enter to play or 'q' to quit: ")
         if answer == 'q':
             break
